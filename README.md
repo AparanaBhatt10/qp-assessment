@@ -6,13 +6,21 @@ This application covers below features (backend)
 1) Admin controller who can check, manage inventory
 2) Customer who can check the grocery items and create a order for different order with different quantity
 3) Tech used: java 17,springboot,H2
+4) Once the springboot project is run on localhost: h2 db can be accesses as follows : http://localhost:8080/grocery-booking-api/h2-console/  -> use password : password,created tables will be visible and can be queriedas well
+5) When a customer creates an order and customer id is not present in that case a new customer is created and then the order is created.
 
+# DB Tables
+users : user entries (Admin/Customer)
+grocery_category: categories of grocery items
+grocery_orders: order details placed by a customer for given grocery items
+order_items: details of individual grocery item in the order 
+payment_details: if a user has placed the order : then payment is pending, entry of pending payment is provided in this table as soon as order is created, once the payment is completed , order is successfull, grocery items are updated accordingly
 
 # API ENDPOINTS
 
 # Update Products : By Admin
 
-curl --location --request PUT 'http://localhost:8080/grocery-booking-api/admin/private/api/v1/items/1' \
+curl --location --request PUT 'http://localhost:8080/grocery-booking-api/admin/private/api/v1/items/{adminId}' \
 --header 'Content-Type: application/json' \
 --data-raw '[
     {
@@ -114,7 +122,7 @@ curl --location --request PUT 'http://localhost:8080/grocery-booking-api/admin/p
 
 # ADD PRODUCTS 
 
-curl --location --request POST 'http://localhost:8080/grocery-booking-api/admin/private/api/v1/items/add/1' \
+curl --location --request POST 'http://localhost:8080/grocery-booking-api/admin/private/api/v1/items/add/{adminId}' \
 --header 'Content-Type: application/json' \
 --data-raw '[
     {
@@ -217,7 +225,7 @@ curl --location --request POST 'http://localhost:8080/grocery-booking-api/admin/
 
 # GET List data Admin:
 
-curl --location --request GET 'http://localhost:8080/grocery-booking-api/admin/private/api/v1/items/0/5'
+curl --location --request GET 'http://localhost:8080/grocery-booking-api/admin/private/api/v1/items/{pageNo}/{pageSize}'
 
 
 Response: {
@@ -314,7 +322,7 @@ Response: {
 
 
 # GET Data for customer:
-curl --location --request GET 'http://localhost:8080/grocery-booking-api/customer/private/api/v1/items/0/5'
+curl --location --request GET 'http://localhost:8080/grocery-booking-api/customer/private/api/v1/items/{pageNo}/{pageSize}'
 
 
 # CREATE customer order:
